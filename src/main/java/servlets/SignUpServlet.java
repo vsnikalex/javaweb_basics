@@ -1,6 +1,8 @@
 package servlets;
 
 import accounts.AccountService;
+import accounts.UserProfile;
+import org.eclipse.jetty.server.Authentication;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +29,10 @@ public class SignUpServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
         //todo: module 2 home work
+        UserProfile user = new UserProfile(request.getParameter("login"));
+        user.setPass(request.getParameter("password"));
 
+        accountService.addNewUser(user);
     }
 
 }

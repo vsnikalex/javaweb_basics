@@ -2,19 +2,19 @@ package accounts;
 
 
 public class UserProfile {
-    private final String login;
-    private final String pass;
-    private final String email;
+    private String login;
+    private String password;
+    private String email;
 
     public UserProfile(String login, String pass, String email) {
         this.login = login;
-        this.pass = pass;
+        this.password = pass;
         this.email = email;
     }
 
     public UserProfile(String login) {
         this.login = login;
-        this.pass = login;
+        this.password = login;
         this.email = login;
     }
 
@@ -23,8 +23,10 @@ public class UserProfile {
     }
 
     public String getPass() {
-        return pass;
+        return password;
     }
+
+    public void setPass(String pwd) { this.password = pwd; }
 
     public String getEmail() {
         return email;
