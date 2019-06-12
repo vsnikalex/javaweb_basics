@@ -23,20 +23,25 @@ public class UsersDataSet implements Serializable { // Serializable Important to
     @Column(name = "name", unique = true, updatable = false)
     private String name;
 
+    @Column(name = "password", unique = false, updatable = false)
+    private String password;
+
     //Important to Hibernate!
     @SuppressWarnings("UnusedDeclaration")
     public UsersDataSet() {
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public UsersDataSet(long id, String name) {
+    public UsersDataSet(long id, String name, String password) {
         this.setId(id);
         this.setName(name);
+        this.setPassword(password);
     }
 
-    public UsersDataSet(String name) {
+    public UsersDataSet(String name, String password) {
         this.setId(-1);
         this.setName(name);
+        this.setPassword(password);
     }
 
     @SuppressWarnings("UnusedDeclaration")
@@ -46,6 +51,14 @@ public class UsersDataSet implements Serializable { // Serializable Important to
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPass() {
+        return password;
     }
 
     public long getId() {
@@ -61,6 +74,7 @@ public class UsersDataSet implements Serializable { // Serializable Important to
         return "UserDataSet{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }

@@ -2,7 +2,9 @@ package servlets;
 
 import accounts.AccountService;
 import accounts.UserProfile;
-import org.eclipse.jetty.server.Authentication;
+import dbService.DBException;
+import dbService.DBService;
+import dbService.dataSets.UsersDataSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,11 +30,21 @@ public class SignUpServlet extends HttpServlet {
     //sign up
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
-        //todo: module 2 home work
-        UserProfile user = new UserProfile(request.getParameter("login"));
-        user.setPass(request.getParameter("password"));
+        DBService dbService = new DBService("create");
 
-        accountService.addNewUser(user);
+        try {
+            long userId = dbService.addUser(request.getParameter("login"), request.getParameter("password"));
+            System.out.println("Added user id: " + userId);
+
+            UsersDataSet dataSet = dbService.getUser(userId);
+            System.out.println("User data set: " + dataSet);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+
+//        UserProfile user = new UserProfile(request.getParameter("login"));
+//        user.setPass(request.getParameter("password"));
+//        accountService.addNewUser(user);
     }
 
 }
