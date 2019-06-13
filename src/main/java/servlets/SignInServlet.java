@@ -4,6 +4,7 @@ import accounts.AccountService;
 import com.google.gson.Gson;
 import dbService.DBException;
 import dbService.DBService;
+import dbService.DBServiceImpl;
 import dbService.dataSets.UsersDataSet;
 
 import javax.servlet.ServletException;
@@ -49,7 +50,7 @@ public class SignInServlet extends HttpServlet {
             return;
         }
 
-        DBService dbService = new DBService("validate");
+        DBService dbService = new DBServiceImpl("validate");
         try {
             UsersDataSet profile = dbService.getUserByName(login);
 
