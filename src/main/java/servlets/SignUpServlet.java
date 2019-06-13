@@ -1,7 +1,6 @@
 package servlets;
 
 import accounts.AccountService;
-import accounts.UserProfile;
 import dbService.DBException;
 import dbService.DBService;
 import dbService.dataSets.UsersDataSet;

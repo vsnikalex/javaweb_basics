@@ -1,7 +1,6 @@
 package main;
 
 import accounts.AccountService;
-import accounts.UserProfile;
 import dbService.dataSets.UsersDataSet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
