@@ -6,6 +6,8 @@ import dbService.DBException;
 import dbService.DBService;
 import dbService.DBServiceImpl;
 import dbService.dataSets.UsersDataSet;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,17 +17,12 @@ import java.io.IOException;
 
 
 public class SignUpServlet extends HttpServlet {
-    @SuppressWarnings({"FieldCanBeLocal", "UnusedDeclaration"}) //todo: remove after doGet implementation
+    static final Logger logger = LogManager.getLogger(SignUpServlet.class.getName());
+    public static final String PAGE_URL = "/signup";
     private final AccountService accountService;
 
     public SignUpServlet(AccountService accountService) {
         this.accountService = accountService;
-    }
-
-    //get public user profile
-    public void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws ServletException, IOException {
-        //todo: implement
     }
 
     //sign up

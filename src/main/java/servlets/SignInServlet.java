@@ -9,6 +9,8 @@ import dbService.DBException;
 import dbService.DBService;
 import dbService.DBServiceImpl;
 import dbService.dataSets.UsersDataSet;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class SignInServlet extends HttpServlet {
+    static final Logger logger = LogManager.getLogger(SignUpServlet.class.getName());
+    public static final String PAGE_URL = "/signin";
     private final AccountService accountService;
 
     public SignInServlet(AccountService accountService) {

@@ -27,22 +27,27 @@ public class Main {
             System.exit(1);
         }
 
-        AccountService accountService = new AccountService();
-        DBService dbService = new DBServiceImpl("create");
+        String portString = args[0];
+        int port = Integer.valueOf(portString);
 
+        logger.info("Starting at http://127.0.0.1:" + portString);
+
+        AccountService accountService = new AccountService();
+
+        DBService dbService = new DBServiceImpl("create");
         dbService.addUser("admin", "admin");
 
+        Server server = new Server(port);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
-        context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
+        context.addServlet(new ServletHolder(new SignUpServlet(accountService)), SignUpServlet.PAGE_URL);
+        context.addServlet(new ServletHolder(new SignInServlet(accountService)), SignInServlet.PAGE_URL);
 
         ResourceHandler resource_handler = new ResourceHandler();
+        resource_handler.setDirectoriesListed(true);
         resource_handler.setResourceBase("public_html");
 
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[]{resource_handler, context});
-
-        Server server = new Server(8080);
         server.setHandler(handlers);
 
         server.start();
