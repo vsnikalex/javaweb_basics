@@ -1,6 +1,7 @@
 package servlets;
 
 import accounts.AccountService;
+
 import dbService.DBException;
 import dbService.DBService;
 import dbService.DBServiceImpl;
@@ -30,7 +31,7 @@ public class SignUpServlet extends HttpServlet {
     //sign up
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
-        DBService dbService = new DBServiceImpl("create");
+        DBService dbService = new DBServiceImpl("validate");
 
         try {
             long userId = dbService.addUser(request.getParameter("login"), request.getParameter("password"));
