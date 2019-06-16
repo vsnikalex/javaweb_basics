@@ -1,6 +1,6 @@
 package servlets;
 
-import accounts.AccountServerI;
+import accounts.AccountService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,10 +13,10 @@ import java.io.IOException;
 public class AdminPageServlet extends HttpServlet {
     static final Logger logger = LogManager.getLogger(AdminPageServlet.class.getName());
     public static final String PAGE_URL = "/admin";
-    private final AccountServerI accountServer;
+    private final AccountService accountService;
 
-    public AdminPageServlet(AccountServerI accountServer) {
-        this.accountServer = accountServer;
+    public AdminPageServlet(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     public void doGet(HttpServletRequest request,
@@ -27,20 +27,20 @@ public class AdminPageServlet extends HttpServlet {
         String remove = request.getParameter("remove");
 
         if (remove != null) {
-            accountServer.removeUser();
+            accountService.removeUser();
             response.getWriter().println("Hasta la vista!");
             response.setStatus(HttpServletResponse.SC_OK);
             return;
         }
 
-        int limit = accountServer.getUsersLimit();
-        int count = accountServer.getUsersCount();
+        int limit = accountService.getUsersLimit();
+        int count = accountService.getUsersCount();
 
         logger.info("Limit: {}. Count {}", limit, count);
 
         if (limit > count) {
             logger.info("Admin pass");
-            accountServer.addNewUser();
+            accountService.addNewUser();
             response.getWriter().println(limit);
             response.setStatus(HttpServletResponse.SC_OK);
         } else {

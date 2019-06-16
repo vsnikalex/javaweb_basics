@@ -4,11 +4,11 @@ import dbService.dataSets.UsersDataSet;
 
 
 public interface DBService {
-    public UsersDataSet getUser(long id) throws DBException;
+    UsersDataSet getUser(long id) throws DBException;
 
-    public UsersDataSet getUserByName(String name) throws DBException;
+    UsersDataSet getUserByName(String name) throws DBException;
 
-    public long addUser(String name, String password) throws DBException;
+    long addUser(String name, String password) throws DBException;
 
-    public void printConnectInfo();
+    void printConnectInfo();
 }

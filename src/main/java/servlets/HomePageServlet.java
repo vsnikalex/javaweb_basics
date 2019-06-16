@@ -1,6 +1,6 @@
 package servlets;
 
-import accounts.AccountServerI;
+import accounts.AccountService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,20 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * @author a.akbashev
- * @author v.chibrikov
- *         <p>
- *         Пример кода для курса на https://stepic.org/
- *         <p>
- *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
- */
+
 public class HomePageServlet extends HttpServlet {
     static final Logger logger = LogManager.getLogger(HomePageServlet.class.getName());
     public static final String PAGE_URL = "/home";
-    private final AccountServerI accountServer;
+    private final AccountService accountServer;
 
-    public HomePageServlet(AccountServerI accountServer) {
+    public HomePageServlet(AccountService accountServer) {
         this.accountServer = accountServer;
     }
 

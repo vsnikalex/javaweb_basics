@@ -2,26 +2,20 @@ package accounts;
 
 import dbService.dataSets.UsersDataSet;
 
-import java.util.HashMap;
-import java.util.Map;
+public interface AccountService {
+    void addNewUser();
 
+    void removeUser();
 
-public class AccountService {
-    private final Map<String, UsersDataSet> sessionIdToProfile;
+    int getUsersLimit();
 
-    public AccountService() {
-        sessionIdToProfile = new HashMap<>();
-    }
+    void setUsersLimit(int usersLimit);
 
-    public UsersDataSet getUserBySessionId(String sessionId) {
-        return sessionIdToProfile.get(sessionId);
-    }
+    int getUsersCount();
 
-    public void addSession(String sessionId, UsersDataSet userProfile) {
-        sessionIdToProfile.put(sessionId, userProfile);
-    }
+    UsersDataSet getUserBySessionId(String sessionId);
 
-    public void deleteSession(String sessionId) {
-        sessionIdToProfile.remove(sessionId);
-    }
+    void addSession(String sessionId, UsersDataSet userProfile);
+
+    void deleteSession(String sessionId);
 }

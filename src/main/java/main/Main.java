@@ -39,11 +39,9 @@ public class Main {
         logger.info("Starting at http://127.0.0.1:" + portString);
 
         DBService dbService = new DBServiceImpl();
+        AccountService accountService = new AccountServiceImpl();
 
-        AccountService accountService = new AccountService();
-        AccountServerI accountServer = new AccountServer();
-
-        AccountServerControllerMBean serverStatistics = new AccountServerController(accountServer);
+        AccountServiceControllerMBean serverStatistics = new AccountServiceController(accountService);
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         ObjectName name = new ObjectName("Admin:type=AccountServerController.usersLimit");
         mbs.registerMBean(serverStatistics, name);
@@ -52,8 +50,8 @@ public class Main {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new SignUpServlet(dbService, accountService)), SignUpServlet.PAGE_URL);
         context.addServlet(new ServletHolder(new SignInServlet(dbService, accountService)), SignInServlet.PAGE_URL);
-        context.addServlet(new ServletHolder(new HomePageServlet(accountServer)), HomePageServlet.PAGE_URL);
-        context.addServlet(new ServletHolder(new AdminPageServlet(accountServer)), AdminPageServlet.PAGE_URL);
+        context.addServlet(new ServletHolder(new AdminPageServlet(accountService)), AdminPageServlet.PAGE_URL);
+        context.addServlet(new ServletHolder(new HomePageServlet(accountService)), HomePageServlet.PAGE_URL);
 
         ResourceHandler resource_handler = new ResourceHandler();
         resource_handler.setDirectoriesListed(true);

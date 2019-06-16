@@ -1,7 +1,7 @@
 package servlets;
 
-import accounts.AccountServer;
-import accounts.AccountServerI;
+import accounts.AccountService;
+import accounts.AccountServiceImpl;
 import org.junit.Test;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,16 +14,8 @@ import java.io.StringWriter;
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.*;
 
-/**
- * @author a.akbashev
- * @author v.chibrikov
- *         <p>
- *         Пример кода для курса на https://stepic.org/
- *         <p>
- *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
- */
 public class HomePageServletTest {
-    private AccountServerI accountServer = mock(AccountServer.class);
+    private AccountService accountService = mock(AccountServiceImpl.class);
 
     private HttpServletResponse getMockedResponse(StringWriter stringWriter) throws IOException {
         HttpServletResponse response = mock(HttpServletResponse.class);
@@ -52,11 +44,11 @@ public class HomePageServletTest {
         HttpServletRequest request = getMockedRequest(HomePageServlet.PAGE_URL);
         when(request.getParameter("remove")).thenReturn("");
 
-        HomePageServlet homePage = new HomePageServlet(accountServer);
+        HomePageServlet homePage = new HomePageServlet(accountService);
 
         homePage.doGet(request, response);
 
         assertEquals("Hasta la vista!", stringWriter.toString().trim());
-        verify(accountServer, times(1)).removeUser();
+        verify(accountService, times(1)).removeUser();
     }
 }
