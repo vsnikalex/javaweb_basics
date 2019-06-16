@@ -12,13 +12,7 @@ import org.hibernate.service.ServiceRegistry;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-/**
- * @author v.chibrikov
- *         <p>
- *         Пример кода для курса на https://stepic.org/
- *         <p>
- *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
- */
+
 public class DBServiceImpl implements DBService {
     private static final String hibernate_show_sql = "true";
     private final String hibernate_hbm2ddl_auto;
@@ -60,7 +54,7 @@ public class DBServiceImpl implements DBService {
         return configuration;
     }
 
-
+    @Override
     public UsersDataSet getUser(long id) throws DBException {
         try {
             Session session = sessionFactory.openSession();
@@ -73,6 +67,7 @@ public class DBServiceImpl implements DBService {
         }
     }
 
+    @Override
     public UsersDataSet getUserByName(String name) throws DBException {
         try {
             Session session = sessionFactory.openSession();
@@ -85,6 +80,7 @@ public class DBServiceImpl implements DBService {
         }
     }
 
+    @Override
     public long addUser(String name, String password) throws DBException {
         try {
             Session session = sessionFactory.openSession();
@@ -99,6 +95,7 @@ public class DBServiceImpl implements DBService {
         }
     }
 
+    @Override
     public void printConnectInfo() {
         try {
             SessionFactoryImpl sessionFactoryImpl = (SessionFactoryImpl) sessionFactory;

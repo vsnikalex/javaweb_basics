@@ -2,6 +2,7 @@ package dbService;
 
 import dbService.dataSets.UsersDataSet;
 
+
 public interface DBService {
     public UsersDataSet getUser(long id) throws DBException;
 

@@ -1,9 +1,10 @@
 package main;
 
-import accounts.AccountService;
+import accounts.*;
 import dbService.DBService;
 import dbService.DBServiceImpl;
 
+import servlets.HomePageServlet;
 import servlets.SignInServlet;
 import servlets.SignUpServlet;
 
@@ -16,6 +17,10 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
+import java.lang.management.ManagementFactory;
 
 
 public class Main {
@@ -32,6 +37,13 @@ public class Main {
 
         logger.info("Starting at http://127.0.0.1:" + portString);
 
+        AccountServerI accountServer = new AccountServer(1);
+
+        AccountServerControllerMBean serverStatistics = new AccountServerController(accountServer);
+        MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+        ObjectName name = new ObjectName("ServerManager:type=AccountServerController");
+        mbs.registerMBean(serverStatistics, name);
+
         AccountService accountService = new AccountService();
 
         DBService dbService = new DBServiceImpl("create");
@@ -41,6 +53,7 @@ public class Main {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), SignUpServlet.PAGE_URL);
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), SignInServlet.PAGE_URL);
+        context.addServlet(new ServletHolder(new HomePageServlet(accountServer)), HomePageServlet.PAGE_URL);
 
         ResourceHandler resource_handler = new ResourceHandler();
         resource_handler.setDirectoriesListed(true);
