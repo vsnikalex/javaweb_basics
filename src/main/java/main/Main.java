@@ -38,6 +38,9 @@ public class Main {
 
         logger.info("Starting at http://127.0.0.1:" + portString);
 
+        DBService dbService = new DBServiceImpl();
+
+        AccountService accountService = new AccountService();
         AccountServerI accountServer = new AccountServer();
 
         AccountServerControllerMBean serverStatistics = new AccountServerController(accountServer);
@@ -45,16 +48,10 @@ public class Main {
         ObjectName name = new ObjectName("Admin:type=AccountServerController.usersLimit");
         mbs.registerMBean(serverStatistics, name);
 
-        AccountService accountService = new AccountService();
-
-        DBService dbService = new DBServiceImpl();
-        dbService.addUser("admin", "admin");
-        dbService.addUser("test", "test");
-
         Server server = new Server(port);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(new SignUpServlet(accountService)), SignUpServlet.PAGE_URL);
-        context.addServlet(new ServletHolder(new SignInServlet(accountService)), SignInServlet.PAGE_URL);
+        context.addServlet(new ServletHolder(new SignUpServlet(dbService, accountService)), SignUpServlet.PAGE_URL);
+        context.addServlet(new ServletHolder(new SignInServlet(dbService, accountService)), SignInServlet.PAGE_URL);
         context.addServlet(new ServletHolder(new HomePageServlet(accountServer)), HomePageServlet.PAGE_URL);
         context.addServlet(new ServletHolder(new AdminPageServlet(accountServer)), AdminPageServlet.PAGE_URL);
 

@@ -20,15 +20,16 @@ public class SignUpServlet extends HttpServlet {
     static final Logger logger = LogManager.getLogger(SignUpServlet.class.getName());
     public static final String PAGE_URL = "/signup";
     private final AccountService accountService;
+    private final DBService dbService;
 
-    public SignUpServlet(AccountService accountService) {
+    public SignUpServlet(DBService dbService, AccountService accountService) {
+        this.dbService = dbService;
         this.accountService = accountService;
     }
 
     //sign up
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
-        DBService dbService = new DBServiceImpl();
 
         try {
             long userId = dbService.addUser(request.getParameter("login"), request.getParameter("password"));

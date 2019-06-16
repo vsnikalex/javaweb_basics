@@ -22,8 +22,10 @@ public class SignInServlet extends HttpServlet {
     static final Logger logger = LogManager.getLogger(SignUpServlet.class.getName());
     public static final String PAGE_URL = "/signin";
     private final AccountService accountService;
+    private final DBService dbService;
 
-    public SignInServlet(AccountService accountService) {
+    public SignInServlet(DBService dbService, AccountService accountService) {
+        this.dbService = dbService;
         this.accountService = accountService;
     }
 
@@ -56,7 +58,6 @@ public class SignInServlet extends HttpServlet {
             return;
         }
 
-        DBService dbService = new DBServiceImpl();
         try {
             UsersDataSet profile = dbService.getUserByName(login);
 

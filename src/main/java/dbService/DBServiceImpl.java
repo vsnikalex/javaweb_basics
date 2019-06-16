@@ -15,17 +15,20 @@ import java.sql.SQLException;
 
 public class DBServiceImpl implements DBService {
     private static final String hibernate_show_sql = "true";
-    private static final String hibernate_hbm2ddl_auto = "create";
+    private SessionFactory sessionFactory;
 
-    private final SessionFactory sessionFactory;
+    public DBServiceImpl() throws DBException {
+        Configuration configuration = getH2Configuration("create");
+        sessionFactory = createSessionFactory(configuration);
 
-    public DBServiceImpl() {
-        Configuration configuration = getH2Configuration();
+        addUser("admin", "admin");
+
+        configuration = getH2Configuration("validate");
         sessionFactory = createSessionFactory(configuration);
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    private Configuration getMySqlConfiguration() {
+    private Configuration getMySqlConfiguration(String hbm2ddl_auto) {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(UsersDataSet.class);
 
@@ -35,11 +38,11 @@ public class DBServiceImpl implements DBService {
         configuration.setProperty("hibernate.connection.username", "root");
         configuration.setProperty("hibernate.connection.password", "root");
         configuration.setProperty("hibernate.show_sql", hibernate_show_sql);
-        configuration.setProperty("hibernate.hbm2ddl.auto", hibernate_hbm2ddl_auto);
+        configuration.setProperty("hibernate.hbm2ddl.auto", hbm2ddl_auto);
         return configuration;
     }
 
-    private Configuration getH2Configuration() {
+    private Configuration getH2Configuration(String hbm2ddl_auto) {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(UsersDataSet.class);
 
@@ -49,7 +52,7 @@ public class DBServiceImpl implements DBService {
         configuration.setProperty("hibernate.connection.username", "test");
         configuration.setProperty("hibernate.connection.password", "test");
         configuration.setProperty("hibernate.show_sql", hibernate_show_sql);
-        configuration.setProperty("hibernate.hbm2ddl.auto", hibernate_hbm2ddl_auto);
+        configuration.setProperty("hibernate.hbm2ddl.auto", hbm2ddl_auto);
         return configuration;
     }
 

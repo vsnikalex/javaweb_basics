@@ -16,12 +16,15 @@ public class UsersDAO {
     }
 
     public UsersDataSet get(long id) throws HibernateException {
+        if (id == -1) return null;
         return (UsersDataSet) session.get(UsersDataSet.class, id);
     }
 
     public long getUserId(String name) throws HibernateException {
         Criteria criteria = session.createCriteria(UsersDataSet.class);
-        return ((UsersDataSet) criteria.add(Restrictions.eq("name", name)).uniqueResult()).getId();
+        UsersDataSet data = (UsersDataSet) criteria.add(Restrictions.eq("name", name)).uniqueResult();
+        if (data == null) return -1;
+        return data.getId();
     }
 
     public long insertUser(String name, String password) throws HibernateException {
