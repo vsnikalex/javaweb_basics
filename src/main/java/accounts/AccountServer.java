@@ -12,6 +12,11 @@ public class AccountServer implements AccountServerI {
     private int usersCount;
     private int usersLimit;
 
+    // default usersLimit = 10
+    public AccountServer() {
+        this(10);
+    }
+
     public AccountServer(int usersLimit) {
         this.usersCount = 0;
         this.usersLimit = usersLimit;

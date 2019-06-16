@@ -28,7 +28,7 @@ public class SignUpServlet extends HttpServlet {
     //sign up
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
-        DBService dbService = new DBServiceImpl("validate");
+        DBService dbService = new DBServiceImpl();
 
         try {
             long userId = dbService.addUser(request.getParameter("login"), request.getParameter("password"));

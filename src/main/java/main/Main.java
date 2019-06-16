@@ -4,6 +4,7 @@ import accounts.*;
 import dbService.DBService;
 import dbService.DBServiceImpl;
 
+import servlets.AdminPageServlet;
 import servlets.HomePageServlet;
 import servlets.SignInServlet;
 import servlets.SignUpServlet;
@@ -37,23 +38,25 @@ public class Main {
 
         logger.info("Starting at http://127.0.0.1:" + portString);
 
-        AccountServerI accountServer = new AccountServer(1);
+        AccountServerI accountServer = new AccountServer();
 
         AccountServerControllerMBean serverStatistics = new AccountServerController(accountServer);
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-        ObjectName name = new ObjectName("ServerManager:type=AccountServerController");
+        ObjectName name = new ObjectName("Admin:type=AccountServerController.usersLimit");
         mbs.registerMBean(serverStatistics, name);
 
         AccountService accountService = new AccountService();
 
-        DBService dbService = new DBServiceImpl("create");
+        DBService dbService = new DBServiceImpl();
         dbService.addUser("admin", "admin");
+        dbService.addUser("test", "test");
 
         Server server = new Server(port);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), SignUpServlet.PAGE_URL);
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), SignInServlet.PAGE_URL);
         context.addServlet(new ServletHolder(new HomePageServlet(accountServer)), HomePageServlet.PAGE_URL);
+        context.addServlet(new ServletHolder(new AdminPageServlet(accountServer)), AdminPageServlet.PAGE_URL);
 
         ResourceHandler resource_handler = new ResourceHandler();
         resource_handler.setDirectoriesListed(true);

@@ -56,7 +56,7 @@ public class SignInServlet extends HttpServlet {
             return;
         }
 
-        DBService dbService = new DBServiceImpl("validate");
+        DBService dbService = new DBServiceImpl();
         try {
             UsersDataSet profile = dbService.getUserByName(login);
 

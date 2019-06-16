@@ -15,12 +15,11 @@ import java.sql.SQLException;
 
 public class DBServiceImpl implements DBService {
     private static final String hibernate_show_sql = "true";
-    private final String hibernate_hbm2ddl_auto;
+    private static final String hibernate_hbm2ddl_auto = "create";
 
     private final SessionFactory sessionFactory;
 
-    public DBServiceImpl(String hbm2ddl) {
-        this.hibernate_hbm2ddl_auto = hbm2ddl;
+    public DBServiceImpl() {
         Configuration configuration = getH2Configuration();
         sessionFactory = createSessionFactory(configuration);
     }
