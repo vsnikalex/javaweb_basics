@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 
 import dbService.DBException;
 import dbService.DBService;
-import dbService.DBServiceImpl;
 import dbService.dataSets.UsersDataSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

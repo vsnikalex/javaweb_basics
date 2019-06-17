@@ -14,10 +14,10 @@ import java.io.IOException;
 public class HomePageServlet extends HttpServlet {
     static final Logger logger = LogManager.getLogger(HomePageServlet.class.getName());
     public static final String PAGE_URL = "/home";
-    private final AccountService accountServer;
+    private final AccountService accountService;
 
     public HomePageServlet(AccountService accountServer) {
-        this.accountServer = accountServer;
+        this.accountService = accountServer;
     }
 
     public void doGet(HttpServletRequest request,
@@ -28,20 +28,20 @@ public class HomePageServlet extends HttpServlet {
         String remove = request.getParameter("remove");
 
         if (remove != null) {
-            accountServer.removeUser();
+            accountService.removeUser();
             response.getWriter().println("Hasta la vista!");
             response.setStatus(HttpServletResponse.SC_OK);
             return;
         }
 
-        int limit = accountServer.getUsersLimit();
-        int count = accountServer.getUsersCount();
+        int limit = accountService.getUsersLimit();
+        int count = accountService.getUsersCount();
 
         logger.info("Limit: {}. Count {}", limit, count);
 
         if (limit > count) {
             logger.info("User pass");
-            accountServer.addNewUser();
+            accountService.addNewUser();
             response.getWriter().println("Hello, world!");
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
