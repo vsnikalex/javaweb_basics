@@ -54,6 +54,7 @@ public class SignInServlet extends HttpServlet {
         if (login == null || password == null) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().println("Empty field login / password");
             return;
         }
 

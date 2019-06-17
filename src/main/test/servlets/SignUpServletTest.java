@@ -15,8 +15,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 
 public class SignUpServletTest {
@@ -76,6 +76,8 @@ public class SignUpServletTest {
         signUp.doPost(request, response);
 
         assertEquals("Added user data set: {id=2, name='testLogin', password='testPassword'}", stringWriter.toString().trim());
+        verify(dbService, times(1)).addUser(tLogin, tPassword);
+        verify(dbService, times(1)).getUser(tId);
     }
 
 }
