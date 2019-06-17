@@ -32,10 +32,8 @@ public class SignUpServlet extends HttpServlet {
 
         try {
             long userId = dbService.addUser(request.getParameter("login"), request.getParameter("password"));
-            System.out.println("Added user id: " + userId);
-
             UsersDataSet dataSet = dbService.getUser(userId);
-            System.out.println("User data set: " + dataSet);
+            response.getWriter().println("Added user data set: " + dataSet);
         } catch (DBException e) {
             e.printStackTrace();
         }

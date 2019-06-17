@@ -39,7 +39,7 @@ public class AdminPageServletTest {
     }
 
     @Test
-    public void testRemoveUser() throws Exception {
+    public void testGetInfo() throws Exception {
         final StringWriter stringWriter = new StringWriter();
         HttpServletResponse response = getMockedResponse(stringWriter);
         HttpServletRequest request = getMockedRequest(AdminPageServlet.PAGE_URL);
@@ -49,9 +49,9 @@ public class AdminPageServletTest {
         when(accountService.getUsersLimit()).thenReturn(limit);
         when(accountService.getUsersCount()).thenReturn(count);
 
-        AdminPageServlet homePage = new AdminPageServlet(accountService);
+        AdminPageServlet adminPage = new AdminPageServlet(accountService);
 
-        homePage.doGet(request, response);
+        adminPage.doGet(request, response);
 
         assertEquals("Limit: " + limit + " Count: " + count, stringWriter.toString().trim());
     }
