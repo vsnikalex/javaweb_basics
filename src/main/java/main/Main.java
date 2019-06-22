@@ -4,10 +4,9 @@ import accounts.*;
 import dbService.DBService;
 import dbService.DBServiceImpl;
 
-import servlets.AdminPageServlet;
-import servlets.HomePageServlet;
-import servlets.SignInServlet;
-import servlets.SignUpServlet;
+import resources.ResourceServer;
+import resources.TestResource;
+import servlets.*;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -36,22 +35,29 @@ public class Main {
         String portString = args[0];
         int port = Integer.valueOf(portString);
 
-        logger.info("Starting at http://127.0.0.1:" + portString);
+//        logger.info("Starting at http://127.0.0.1:" + portString);
 
-        DBService dbService = new DBServiceImpl();
-        AccountService accountService = new AccountServiceImpl();
+//        DBService dbService = new DBServiceImpl();
+//        AccountService accountService = new AccountServiceImpl();
 
-        AccountServiceControllerMBean serverStatistics = new AccountServiceController(accountService);
+//        AccountServiceControllerMBean serverStatistics = new AccountServiceController(accountService);
+//        MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+//        ObjectName name = new ObjectName("Admin:type=AccountServerController.usersLimit");
+//        mbs.registerMBean(serverStatistics, name);
+
+        TestResource testResource = new TestResource("Todd", 32);
+        ResourceServer resourceServer = new ResourceServer(testResource);
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-        ObjectName name = new ObjectName("Admin:type=AccountServerController.usersLimit");
-        mbs.registerMBean(serverStatistics, name);
+        ObjectName name = new ObjectName("Admin:type=ResourceServerController");
+        mbs.registerMBean(resourceServer, name);
 
         Server server = new Server(port);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(new SignUpServlet(dbService, accountService)), SignUpServlet.PAGE_URL);
-        context.addServlet(new ServletHolder(new SignInServlet(dbService, accountService)), SignInServlet.PAGE_URL);
-        context.addServlet(new ServletHolder(new AdminPageServlet(accountService)), AdminPageServlet.PAGE_URL);
-        context.addServlet(new ServletHolder(new HomePageServlet(accountService)), HomePageServlet.PAGE_URL);
+//        context.addServlet(new ServletHolder(new SignUpServlet(dbService, accountService)), SignUpServlet.PAGE_URL);
+//        context.addServlet(new ServletHolder(new SignInServlet(dbService, accountService)), SignInServlet.PAGE_URL);
+//        context.addServlet(new ServletHolder(new AdminPageServlet(accountService)), AdminPageServlet.PAGE_URL);
+//        context.addServlet(new ServletHolder(new HomePageServlet(accountService)), HomePageServlet.PAGE_URL);
+        context.addServlet(new ServletHolder(new ResourceServlet(resourceServer)), ResourceServlet.PAGE_URL);
 
         ResourceHandler resource_handler = new ResourceHandler();
         resource_handler.setDirectoriesListed(true);
@@ -62,7 +68,8 @@ public class Main {
         server.setHandler(handlers);
 
         server.start();
-        logger.info("Server started");
+//        logger.info("Server started");
+        System.out.println("Server started");
 
         server.join();
     }
