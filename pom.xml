@@ -14,7 +14,7 @@
         <com.h2database.h2.version>1.4.187</com.h2database.h2.version>
         <mysql.mysql-connector-java.version>5.1.35</mysql.mysql-connector-java.version>
         <org.hibernate.hibernate-core.version>4.3.10.Final</org.hibernate.hibernate-core.version>
-        <org.apache.logging.log4j.version>2.2</org.apache.logging.log4j.version>
+        <org.apache.logging.log4j.version>2.13.3</org.apache.logging.log4j.version>
         <junit.version>4.11</junit.version>
         <org.mockito.version>1.8.4</org.mockito.version>
     </properties>
